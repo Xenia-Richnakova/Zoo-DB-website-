@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zoo Database</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body name="bdy" id="bdy" style="background-image: url('static/lifs.jpg'); background-attachment: fixed;" class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <script src="https://unpkg.com/htmx.org@1.9.11"></script>
+
+  <div class="container mx-auto">
+    <div class="flex justify-center mt-10">
+      <h1 class="text-3xl font-semibold text-white">Zoo Database</h1>
+    </div>
+
+    <!-- buttons for caregivers and cages -->
+    <div class="flex justify-center mt-8">
+      <div class="justify-center">
+        <a href="/caregivers" class="w-full bg-white text-black py-2 px-4 rounded-md hover:bg-white-600">Caregivers</a>
+        <a href="/cages" class="w-full bg-white text-black py-2 px-4 rounded-md hover:bg-white-600">Cages</a>
+      </div>
+    </div>
+
+    <!-- Search filter -->
+    <div class="flex justify-center mt-8">
+      <form hx-get="/get_animals" hx-swap="innerHTML" hx-target="#animalTableBody" class="flex w-1/3 bg-white shadow-md rounded-lg p-4">
+        <input type="text" id="searchInput" name="searchInput" class="w-full mt-1 p-2 border rounded-md" placeholder="Search animals...">
+        <button type="submit" class="w-1/11 bg-green-500 text-black py-2 px-4 rounded-full ml-5 hover:bg-white-600"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+        </button>
+      </form>
+    </div>
+
+    <!-- Table to display animals -->
+    <div class="flex justify-center mt-8">
+        <div class="bg-white shadow-md rounded-lg p-8">
+          <h2 class="text-xl font-semibold text-gray-800 mb-4">Animals in the Zoo</h2>
+          <table class="w-full">
+            <thead>
+              <tr>
+                <th class="px-4 py-2">Animal Name</th>
+                <th class="px-4 py-2">Species</th>
+                <th class="px-4 py-2">Origin Country</th>
+                <th class="px-4 py-2">Birth Date</th>
+                <th class="px-4 py-2">Food</th>
+                <th class="px-4 py-2">Feeding Time</th>
+                <th class="px-4 py-2">Last Cleaning</th>
+                <th class="px-4 py-2">Caregiver Key</th>
+                <th class="px-4 py-2">Cage Key</th>
+                <th class="px-4 py-2">Edit/Delete</th>
+              </tr>
+            </thead>
+            <tbody id="animalTableBody" hx-get="/get_animals" hx-trigger="load, add_animal from:body">
+              <!-- Animal data will be dynamically inserted here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="flex justify-center mt-5">
+      <div class="w-1/2 bg-white shadow-md rounded-lg p-8">
+        <form id="zooForm" hx-post="/add_animal" hx-swap="none" class="space-y-4">
+          <div>
+            <label for="animalName" class="inputLabel">Animal Name:</label>
+            <input type="text" id="animalName" name="animalName" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter animal name">
+          </div>
+          <div>
+            <label for="species" class="inputLabel">Species:</label>
+            <input type="text" id="species" name="species" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter species">
+          </div>
+
+          <div>
+            <label for="origin_country" class="inputLabel">Origin Country:</label>
+            <input type="text" id="origin_country" name="origin_country" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter origin country">
+          </div>
+
+          <div>
+            <label for="birth_date" class="inputLabel">Birth Date:</label>
+            <input type="text" id="birth_date" name="birth_date" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter birth date">
+          </div>
+
+          <div>
+            <label for="food" class="inputLabel">Food:</label>
+            <input type="text" id="food" name="food" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter food">
+          </div>
+
+          <div>
+            <label for="feeding_time" class="inputLabel">Feeding Time:</label>
+            <input type="text" id="feeding_time" name="feeding_time" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter feeding time">
+          </div>
+
+          <div>
+            <label for="last_cleaning" class="inputLabel">Last Cleaning:</label>
+            <input type="text" id="last_cleaning" name="last_cleaning" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter last cleaning">
+          </div>
+
+          <div>
+            <label for="caregiver_key" class="inputLabel">Caregiver:</label>
+            <select type="number" id="caregiver_key" name="caregiver_key" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter caregiver key">
+              <!--$caregiver_key-->
+            </select>
+          
+          </div>
+
+          <div>
+            <label for="cage_key" class="inputLabel">Cage:</label>
+            <select type="number" id="cage_key" name="cage_key" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter cage key">
+              <!--$cages Options-->
+            </select>
+          </div>
+
+          <div>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Add Animal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+
+</body>
+</html>

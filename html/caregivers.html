@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caregivers</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body name="bdy" id="bdy" style="background-image: url('/static/lifs.jpg');" class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <script src="https://unpkg.com/htmx.org@1.9.11"></script>
+
+  <div class="container mx-auto">
+    <div class="flex justify-center mt-10">
+      <h1 class="text-3xl font-semibold text-white">Caregivers</h1>
+    </div>
+
+    <div class="flex justify-center mt-8">
+        <div class="justify-center">
+          <a href="/" class="w-full bg-white text-black py-2 px-4 rounded-md hover:bg-white-600">Animals</a>
+          <a href="/cages" class="w-full bg-white text-black py-2 px-4 rounded-md hover:bg-white-600">Cages</a>
+        </div>
+      </div>
+
+    <!-- Table to display animals -->
+    <div class="flex justify-center mt-8">
+        <div class="w-1/2 bg-white shadow-md rounded-lg p-8">
+          <h2 class="text-xl font-semibold text-gray-800 mb-4">Employees of the Zoo</h2>
+          <table class="w-full">
+            <thead>
+              <tr>
+                <th class="px-4 py-2">Caregiver Name</th>
+                <th class="px-4 py-2">Working days</th>
+                <th class="px-4 py-2">Working hours</th>
+                <th class="px-4 py-2"></th>
+              </tr>
+            </thead>
+            <tbody id="caregiversTableBody" hx-get="/get_caregivers" hx-trigger="load, add_caregiver from:body">
+              <!-- Animal data will be dynamically inserted here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-center mt-5">
+        <div class="w-1/2 bg-white shadow-md rounded-lg p-8">
+          <form id="caregiversForm" hx-post="/add_caregiver" hx-swap="none" class="space-y-4">
+            <div>
+              <label for="caregiverName" class="inputLabel">Caregiver's Name:</label>
+              <input type="text" id="caregiverName" name="caregiverName" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter animal name">
+            </div>
+            <div>
+              <label for="shift_days" class="inputLabel">Working days</label>
+              <input type="text" id="shift_days" name="shift_days" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter days of week when will caregiver work">
+            </div>
+            <div>
+              <label for="shift_time" class="inputLabel">Working hours</label>
+              <input type="text" id="shift_time" name="shift_time" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter what time will caregiver work">
+            </div>
+            <div>
+              <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Add caregiver</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+  
+    
+  
+  </body>
+  </html>
