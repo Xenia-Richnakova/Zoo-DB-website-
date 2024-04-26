@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zoo Database</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body name="bdy" id="bdy" style="background-image: url('/static/lifs.jpg');" class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <script src="https://unpkg.com/htmx.org@1.9.11"></script>
+
+  <div class="container mx-auto">
+    <div class="flex justify-center mt-10">
+      <h1 class="text-3xl font-semibold text-white">Edit Caregiver</h1>
+    </div>
+
+    <div class="flex justify-center mt-5">
+        <div style="opacity: 0.93;" class="w-1/2 bg-white shadow-md rounded-lg p-8">
+          <form id="caregiverForm" hx-post="/edit_caregiver/$caregiver_id" hx-swap="none" class="space-y-4">
+            <div>
+              <label for="caregiverName" class="inputLabel">Caregiver Name:</label>
+              <input type="text" id="caregiverName" value="$caregiverName" name="caregiverName" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter caregiver's name">
+            </div>
+            <div>
+              <label for="shift_days" class="inputLabel">Species:</label>
+              <input type="text" id="shift_days" name="shift_days" value="$shift_days" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter shift days">
+            </div>
+
+            <div>
+              <label for="shift_time" class="inputLabel">Origin Country:</label>
+              <input type="text" id="shift_time" name="shift_time" value="$shift_time" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter shift time">
+            </div>
+
+            <div class="flex justify-center m-5">
+              <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">Edit Caregiver</button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Delete button -->
+      <div class="flex justify-center m-5">
+        <button type="submit" hx-post="/delete_caregiver/$caregiver_id" class="w-1/8 bg-red-500 text-white py-2 px-4 rounded-md">Delete caregiver</button>
+      </div>
+    </div>
+  
+    
+  
+  </body>
+  </html>
+

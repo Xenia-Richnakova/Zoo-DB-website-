@@ -24,7 +24,7 @@
 
     <!-- Table to display animals -->
     <div class="flex justify-center mt-8">
-        <div class="w-1/2 bg-white shadow-md rounded-lg p-8">
+        <div style="opacity: 0.93;" class="w-1/18 bg-white shadow-md rounded-lg p-8">
           <h2 class="text-xl font-semibold text-gray-800 mb-4">Employees of the Zoo</h2>
           <table class="w-full">
             <thead>
@@ -32,7 +32,7 @@
                 <th class="px-4 py-2">Caregiver Name</th>
                 <th class="px-4 py-2">Working days</th>
                 <th class="px-4 py-2">Working hours</th>
-                <th class="px-4 py-2"></th>
+                <th class="px-4 py-2">Edit/Delete</th>
               </tr>
             </thead>
             <tbody id="caregiversTableBody" hx-get="/get_caregivers" hx-trigger="load, add_caregiver from:body">
@@ -44,11 +44,11 @@
     </div>
 
     <div class="flex justify-center mt-5">
-        <div class="w-1/2 bg-white shadow-md rounded-lg p-8">
+        <div style="opacity: 0.93;" class="w-1/2 bg-white shadow-md rounded-lg p-8">
           <form id="caregiversForm" hx-post="/add_caregiver" hx-swap="none" class="space-y-4">
             <div>
               <label for="caregiverName" class="inputLabel">Caregiver's Name:</label>
-              <input type="text" id="caregiverName" name="caregiverName" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter animal name">
+              <input type="text" id="caregiverName" name="caregiverName" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter caregiver's name">
             </div>
             <div>
               <label for="shift_days" class="inputLabel">Working days</label>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zoo Database</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body name="bdy" id="bdy" style="background-image: url('/static/lifs.jpg');" class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <script src="https://unpkg.com/htmx.org@1.9.11"></script>
+
+  <div class="container mx-auto">
+    <div class="flex justify-center mt-10">
+      <h1 class="text-3xl font-semibold text-white">Edit cage</h1>
+    </div>
+
+    <div class="flex justify-center mt-5">
+        <div style="opacity: 0.93;" class="w-1/2 bg-white shadow-md rounded-lg p-8">
+          <form id="cageForm" hx-post="/edit_cage/$cage_id" hx-swap="none" class="space-y-4">
+            <div>
+              <label for="cageName" class="inputLabel">Cage Name:</label>
+              <input type="text" id="cageName" value="$cageName" name="cageName" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter cage's name">
+            </div>
+            <div>
+              <label for="cleaning_days" class="inputLabel">Cleaning days:</label>
+              <input type="text" id="cleaning_days" name="cleaning_days" value="$cleaning_days" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter cleaning days">
+            </div>
+
+            <div>
+              <label for="cleaning_time" class="inputLabel">Cleaning time:</label>
+              <input type="text" id="cleaning_time" name="cleaning_time" value="$cleaning_time" class="w-full mt-1 p-2 border rounded-md" placeholder="Enter cleaning time">
+            </div>
+
+            <div class="flex justify-center m-5">
+              <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">Edit cage</button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Delete button -->
+      <div class="flex justify-center m-5">
+        <button type="submit" hx-post="/delete_cage/$cage_id" class="w-1/8 bg-red-500 text-white py-2 px-4 rounded-md">Delete cage</button>
+      </div>
+    </div>
+  
+    
+  
+  </body>
+  </html>
+

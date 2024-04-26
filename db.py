@@ -1,24 +1,37 @@
 import sqlite3
 from typing import Any
 
-#TODO Dokoncit tabulku zoo, pridat dalsie atributy pre zvieratko 
-# TODO Moznost vybrat chovatelov, kazdy chovatel ma svoju tabulku o ktore zvieratka sa stará a rozpis kedy robi
+
+# TODO Dorobit cages edit a delete
 
 class Caregiver:
-    def __init__(self, data) -> None:
+    def __init__(self, data=None) -> None:
         if data:
             self.id = data[0]
             self.name = data[1]
             self.shift_days = data[2]
             self.shift_times = data[3]
 
+    def modify(self, reqForm, caregiver_id):
+        self.name = reqForm["caregiverName"]
+        self.shift_days = reqForm["shift_days"]
+        self.shift_times = reqForm["shift_time"]
+        self.id = caregiver_id
+        
+
 class Cages:
-    def __init__(self, data) -> None:
+    def __init__(self, data=None) -> None:
         if data:
             self.id = data[0]
             self.name = data[1]
             self.cleaning_days = data[2]
             self.cleaning_time = data[3]
+
+    def modify(self, reqForm, caregiver_id):
+        self.name = reqForm["cageName"]
+        self.cleaning_days = reqForm["cleaning_days"]
+        self.cleaning_time = reqForm["cleaning_time"]
+        self.id = caregiver_id
         
 
 
@@ -72,6 +85,19 @@ class DB:
         self.cur.execute("INSERT INTO caregivers (name, shift_days, shift_times) VALUES(?, ?, ?)", data)
         self.con.commit()
 
+    def pick_caregiver(self, id) -> Caregiver:
+        picked = self.cur.execute("SELECT * FROM caregivers WHERE caregivers.key = ?", [id]).fetchone()
+        if picked is None:
+            raise Exception(f"Caregiver with {id} does not exists")
+        else:
+            return Caregiver(picked)
+        
+    def update_caregiver(self, caregiver: Caregiver) -> None:
+        self.cur.execute(f'''UPDATE caregivers 
+                         SET name = "{caregiver.name}", shift_days = "{caregiver.shift_days}", shift_times = "{caregiver.shift_times}"
+                         WHERE key = {caregiver.id}''')
+        self.con.commit()
+
     # Animals
     def add_animal(self, data):
         self.cur.execute("INSERT INTO zoo (name, spiece, origin_country, birth_date, food, feeding_time, last_cleaning, caregiver_key, cage_key) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
@@ -116,8 +142,8 @@ class DB:
                          WHERE key = {animal.id}''')
         self.con.commit()
 
-    def delete_animal(self, animal_id):
-        self.cur.execute(f"DELETE FROM zoo WHERE key = {animal_id}")
+    def delete_entity(self, id, table):
+        self.cur.execute(f"DELETE FROM {table} WHERE key = {id}")
         self.con.commit()
 
     # Cages
@@ -128,6 +154,20 @@ class DB:
     
     def add_cage(self, data):
         self.cur.execute("INSERT INTO cages (name, cleaning_days, cleaning_time) VALUES(?, ?, ?)", data)
+        self.con.commit()
+
+
+    def pick_cage(self, id) -> Cages:
+        picked = self.cur.execute("SELECT * FROM cages WHERE cages.key = ?", [id]).fetchone()
+        if picked is None:
+            raise Exception(f"Cage with {id} does not exists")
+        else:
+            return Cages(picked)
+        
+    def update_cage(self, cage: Cages) -> None:
+        self.cur.execute(f'''UPDATE cages 
+                         SET name = "{cage.name}", cleaning_days = "{cage.cleaning_days}", cleaning_time = "{cage.cleaning_time}"
+                         WHERE key = {cage.id}''')
         self.con.commit()
     
     def close(self):

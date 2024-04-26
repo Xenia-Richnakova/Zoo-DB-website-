@@ -37,7 +37,7 @@ class Design:
                 <td class="px-4 py-2 tdCenter">{record.shift_days}</td>
                 <td class="px-4 py-2 tdCenter">{record.shift_times}</td>
                 <td class="px-4 py-2 text-center align-middle">
-                    <a class="intoMiddle">{self.editButton}</a>
+                    <a class="intoMiddle" href="/edit_caregiver/{record.id}">{self.editButton}</a>
                 </td>
             </tr>
             '''
@@ -52,15 +52,26 @@ class Design:
                 <td class="px-4 py-2 tdCenter">{record.cleaning_days}</td>
                 <td class="px-4 py-2 tdCenter">{record.cleaning_time}</td>
                 <td class="px-4 py-2 text-center align-middle">
-                    <a class="intoMiddle">{self.editButton}</a>
+                    <a class="intoMiddle" href="/edit_cage/{record.id}">{self.editButton}</a>
                 </td>
             </tr>
             '''
         return row
     
-    def cages_and_caregivers(self, cagesTable, caregiversTable, animal_id=None):
-        if animal_id:
-            pass
+    def cages_and_caregivers(self, cagesTable, caregiversTable, animal: AnimalEntity=None):
+        if animal:
+            caregivers = ""
+            for i in caregiversTable:
+                if animal.caregiver_key == i.id:
+                    caregivers += f'<option selected value="{i.id}">{i.name}</option>'
+                else:
+                    caregivers += f'<option value="{i.id}">{i.name}</option>'
+            cages =""
+            for i in cagesTable:
+                if animal.cage_key == i.id:
+                    cages += f'<option selected value="{i.id}">{i.name}</option>'
+                else:
+                    cages += f'<option value="{i.id}">{i.name}</option>'
         else:
             caregivers = ""
             for i in caregiversTable:
@@ -69,5 +80,5 @@ class Design:
             cages =""
             for i in cagesTable:
                 cages += f'<option value="{i.id}">{i.name}</option>'
-            return caregivers, cages
+        return caregivers, cages
 
